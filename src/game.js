@@ -1,5 +1,4 @@
-
-let config = {
+config = {
     type: Phaser.CANVAS,
     width:600,
     height: 400,      
@@ -38,6 +37,8 @@ function create()
     this.platforms.create(-20, 200, 'platform').setScale(0.1,15).refreshBody();
     //this.platforms.create(820, 200, 'platform').setScale(0.1,15).refreshBody();
     this.platforms.create(400, 280, 'platform').setScale(0.5,1).refreshBody();
+    
+    this.item=this.physics.add.sprite(400,240,'item');
 
     this.player = this.physics.add.sprite(100, 300, 'player');
     
@@ -57,6 +58,7 @@ function create()
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cameras.main.startFollow(this.player);
     this.physics.add.collider(this.player, this.platforms); //colision entre jugador y plataformas
+    this.physics.add.collider(this.item, this.platforms);
 
 }
 
