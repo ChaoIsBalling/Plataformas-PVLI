@@ -1,4 +1,6 @@
-config = {
+import {Player} from "./player.js"
+
+let config = {
     type: Phaser.CANVAS,
     width:600,
     height: 400,      
@@ -30,8 +32,7 @@ function create()
     let bg= this.add.image(0, 0, 'sky').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight); 
     this.cameras.main.setSize(600, 400);
-
-
+    //this.Player = new Player(0,0);
     this.platforms = this.physics.add.staticGroup();   
     this.platforms.create(400, 400, 'platform').setScale(2).refreshBody();//suelo
     this.platforms.create(-20, 200, 'platform').setScale(0.1,15).refreshBody();
