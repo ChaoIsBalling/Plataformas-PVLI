@@ -1,10 +1,10 @@
 import Player from "./player.js"
 import Item from "./item.js";
 import Enemy from "./enemy.js";
+import GameOver from"./gameOver.js"
+import Win from "./win.js"
 class Example extends Phaser.Scene
 {
-
-
  preload()
 {
     this.load.image('sky', 'assets/sky.png');
@@ -18,11 +18,13 @@ class Example extends Phaser.Scene
 
  create()
 {
+    const text = this.add.text(350, 250, 'SEXXXX', { font: '16px Courier', fill: '#00ff00' });
+
     this.music =  this.sound.add('music', {
 		volume: 0.3,
 		loop: true
 	})
-	this.music.play()
+	this.music.play();
 
     let bg= this.add.image(0, 0, 'sky').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight); 
@@ -50,12 +52,16 @@ class Example extends Phaser.Scene
 }
 win()
 {
-this.pause();
+    this.scene.pause();
+    this.scene.start('win');
 }
 touchEnemy()
 {
 if(this.player.invincible)
 this.enemy.destroy();
+else
+this.scene.pause();
+this.scene.start('gameOver');
 }
 collectStar()
 {
@@ -76,7 +82,7 @@ const config = {
     scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
-    scene: Example,
+    scene:[ Example,GameOver,Win],
     physics: { 
 		default: 'arcade', 
 		arcade: { 
