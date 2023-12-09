@@ -3,7 +3,6 @@ export default class Player extends Phaser.GameObjects.Sprite{
         super(scene,x,y,texture);
         this.scene.add.existing(this);
         scene.physics.add.existing(this);
-
         this.scene.anims.create({
             key: 'left',
             frames: scene.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
@@ -17,8 +16,10 @@ export default class Player extends Phaser.GameObjects.Sprite{
             repeat: -1
         });
         this.cursors = scene.input.keyboard.createCursorKeys();
+        this.invincible = false;
     }
 
+   
     update()
     {
         if (this.cursors.left.isDown)
@@ -39,5 +40,9 @@ export default class Player extends Phaser.GameObjects.Sprite{
         {
             this.body.setVelocityY(-230); 
         }
+    } 
+    Invincible()
+    {
+       this.invincible=true;
     }
 }
