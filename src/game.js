@@ -18,8 +18,6 @@ class Example extends Phaser.Scene
 
  create()
 {
-    const text = this.add.text(350, 250, 'SEXXXX', { font: '16px Courier', fill: '#00ff00' });
-
     this.music =  this.sound.add('music', {
 		volume: 0.3,
 		loop: true
@@ -29,15 +27,18 @@ class Example extends Phaser.Scene
     let bg= this.add.image(0, 0, 'sky').setOrigin(0, 0);
     this.cameras.main.setBounds(0, 0, bg.displayWidth, bg.displayHeight); 
     this.cameras.main.setSize(600, 400);
-    
+    this.enemy = this.add.group({
+        maxSize: 10,
+        runChildUpdate: true
+    });
     
     this.platforms = this.physics.add.staticGroup();   
-    this.platforms.create(400, 400, 'platform').setScale(2).refreshBody();//suelo
+    this.platforms.create(400, 400, 'platform').setScale(2.1).refreshBody();//suelo
     this.platforms.create(400, 280, 'platform').setScale(0.5,1).refreshBody();
     this.flag = this.physics.add.sprite(700, 240, 'flag');
     this.item= new Item(this,400,240,'item');          
     this.player = new Player(this,100,300,'player');
-    this.enemy = new Enemy(this,200,300,'enemy' )
+    this.enemy.add(new Enemy(this,800,300,'enemy' ))
 
     this.cameras.main.startFollow(this.player);
 
@@ -55,13 +56,15 @@ win()
     this.scene.pause();
     this.scene.start('win');
 }
-touchEnemy()
+touchEnemy(player,enemy)
 {
-if(this.player.invincible)
-this.enemy.destroy();
+if(player.invincible)
+enemy.destroy();
 else
+{
 this.scene.pause();
 this.scene.start('gameOver');
+}
 }
 collectStar()
 {
@@ -71,7 +74,6 @@ this.player.Invincible();
 update()
 {
     this.player.update();
-    this.enemy.update();
 }}
 
 const config = {
@@ -87,7 +89,7 @@ const config = {
 		default: 'arcade', 
 		arcade: { 
 			gravity: { y: 200 }, 
-			debug: true 
+			debug: false 
 		} 
 	}
 };
